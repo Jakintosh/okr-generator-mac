@@ -1,0 +1,93 @@
+/* Variables */
+
+:root {
+    --outline-color: #444;
+    --text-color: #222;
+    
+    --micro-text-size: 8pt;
+    --small-text-size: 10pt;
+    --normal-text-size: 12pt;
+    --large-text-size: 14pt;
+    
+    --normal-font-weight: 400;
+    --heavy-font-weight: 700;
+
+	margin: 0;
+	padding: 0;
+}
+
+
+/* Document styles */
+.okr-card {
+    
+    color: var(--text-color);
+    font-family: 'Cabin', sans-serif;
+    font-size: var(--normal-text-size);
+    font-weight: var(--normal-font-weight);
+    
+    width: 400px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--outline-color);
+    padding-bottom: 32px;
+}
+.header {
+    font-size: var(--small-text-size);
+    font-weight: var(--heavy-font-weight);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+/* Objective Section */
+
+.objective {
+    
+    color: white;
+    text-align: center;
+    font-weight: var(--heavy-font-weight);
+    font-size: var(--large-text-size);
+    
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 40px;
+    padding-right: 40px;
+    
+    background-color: #e64c4c;
+}
+.objective > .header {
+    padding-bottom: 12px;
+}
+
+
+/* AMB Section */
+
+.amb {
+/*    display: none;*/
+    color: white;
+    font-weight: var(--heavy-font-weight);
+    font-size:  var(--micro-text-size);
+    text-align: center;
+    text-transform: uppercase;
+    
+    padding-top: 4px;
+    padding-bottom: 4px;
+    
+    background-color: var(--outline-color);
+}
+
+/* Key Results Section */
+
+.key-results > .header {
+    padding-top: 32px;
+    padding-bottom: 16px;
+}
+.key-results > ol {
+    margin: 0;
+    padding-left: 56px;
+}
+.key-results > ol > li {
+    margin-bottom: 10px;
+    padding-left: 4px;
+    padding-right: 40px;
+}

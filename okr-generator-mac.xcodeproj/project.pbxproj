@@ -11,6 +11,7 @@
 		87E2CF472260BEBD0096818C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2CF462260BEBD0096818C /* ViewController.swift */; };
 		87E2CF492260BEBF0096818C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E2CF482260BEBF0096818C /* Assets.xcassets */; };
 		87E2CF4C2260BEBF0096818C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87E2CF4A2260BEBF0096818C /* Main.storyboard */; };
+		87E2CF5C2260CB200096818C /* okr-generator in Resources */ = {isa = PBXBuildFile; fileRef = 87E2CF5B2260CB200096818C /* okr-generator */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,8 @@
 		87E2CF4B2260BEBF0096818C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87E2CF4D2260BEBF0096818C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87E2CF4E2260BEBF0096818C /* okr_generator_mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = okr_generator_mac.entitlements; sourceTree = "<group>"; };
+		87E2CF5B2260CB200096818C /* okr-generator */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "okr-generator"; sourceTree = "<group>"; };
+		87E2CF5D2260CC8A0096818C /* okr-generator-mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "okr-generator-mac.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,8 @@
 		87E2CF432260BEBD0096818C /* okr-generator-mac */ = {
 			isa = PBXGroup;
 			children = (
+				87E2CF5D2260CC8A0096818C /* okr-generator-mac.entitlements */,
+				87E2CF5B2260CB200096818C /* okr-generator */,
 				87E2CF442260BEBD0096818C /* AppDelegate.swift */,
 				87E2CF462260BEBD0096818C /* ViewController.swift */,
 				87E2CF482260BEBF0096818C /* Assets.xcassets */,
@@ -95,6 +100,11 @@
 				TargetAttributes = {
 					87E2CF402260BEBD0096818C = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -121,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87E2CF5C2260CB200096818C /* okr-generator in Resources */,
 				87E2CF492260BEBF0096818C /* Assets.xcassets in Resources */,
 				87E2CF4C2260BEBF0096818C /* Main.storyboard in Resources */,
 			);
@@ -271,7 +282,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "okr-generator-mac/okr_generator_mac.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C8L677C7HM;
@@ -290,7 +300,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "okr-generator-mac/okr_generator_mac.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C8L677C7HM;
