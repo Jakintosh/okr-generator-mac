@@ -23,7 +23,6 @@
 		87E2CF4D2260BEBF0096818C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87E2CF4E2260BEBF0096818C /* okr_generator_mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = okr_generator_mac.entitlements; sourceTree = "<group>"; };
 		87E2CF5B2260CB200096818C /* okr-generator */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "okr-generator"; sourceTree = "<group>"; };
-		87E2CF5D2260CC8A0096818C /* okr-generator-mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "okr-generator-mac.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +55,6 @@
 		87E2CF432260BEBD0096818C /* okr-generator-mac */ = {
 			isa = PBXGroup;
 			children = (
-				87E2CF5D2260CC8A0096818C /* okr-generator-mac.entitlements */,
 				87E2CF5B2260CB200096818C /* okr-generator */,
 				87E2CF442260BEBD0096818C /* AppDelegate.swift */,
 				87E2CF462260BEBD0096818C /* ViewController.swift */,

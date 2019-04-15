@@ -11,11 +11,15 @@ import WebKit
 
 class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 
+    // web view
 	@IBOutlet weak var webView: WKWebView!
 	@IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var webViewWidthConstraint: NSLayoutConstraint!
 
-
+    // headers
+    @IBOutlet weak var objectiveHeader: NSTextField!
+    @IBOutlet weak var keyResultHeader: NSTextField!
+    
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
@@ -32,6 +36,14 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 
 	@IBAction func generatePNG(_ sender: Any) {
 
+        // update objective header
+        webView.evaluateJavaScript(
+            "var e = document.getElementById(\"obj-text\");" +
+            "e.innerHTML = \"\(objectiveHeader!.stringValue)\";"
+            , completionHandler: { (_, error) in
+                print(error)
+        })
+        
 		webView.takeSnapshot(with: nil, completionHandler: { (image, error) in
 			if let i = image {
 				let path = self.userDesktop() + "/image.png"
@@ -53,10 +65,9 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 	}
 	func savePNG(image: NSImage, size: CGSize, path:String) {
 
-		let sizedImage = image.resizeImage(width: size.width/2, size.height/2)
 		let url = URL(fileURLWithPath: path)
 		print("saving to url: \(url) with size: \(size)")
-		let imageRep = NSBitmapImageRep(data: sizedImage.tiffRepresentation!)
+		let imageRep = NSBitmapImageRep(data: image.tiffRepresentation!)
 		let pngData = imageRep?.representation(using: .png, properties: [:])
 		do {
 			try pngData?.write(to: url, options: .atomic)
