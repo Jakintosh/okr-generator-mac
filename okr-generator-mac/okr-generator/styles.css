@@ -15,6 +15,9 @@
 	margin: 0;
 	padding: 0;
 }
+body {
+	margin: 0;
+}
 
 
 /* Document styles */
@@ -26,6 +29,7 @@
     font-weight: var(--normal-font-weight);
     
     width: 400px;
+	box-sizing: border-box;
     border-style: solid;
     border-width: 2px;
     border-color: var(--outline-color);

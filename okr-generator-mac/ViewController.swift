@@ -9,23 +9,34 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
+class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTextFieldDelegate {
 
     // web view
 	@IBOutlet weak var webView: WKWebView!
 	@IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var webViewWidthConstraint: NSLayoutConstraint!
 
-    // headers
+    // text fields
     @IBOutlet weak var objectiveHeader: NSTextField!
-    @IBOutlet weak var keyResultHeader: NSTextField!
-    
+	@IBOutlet weak var objectiveText: NSTextField!
+	@IBOutlet weak var keyResultHeader: NSTextField!
+
+	private let objectiveHeaderId = "obj-header"
+	private let objectiveTextId = "obj"
+	private let keyResultHeaderId = "kr-header"
+
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
 
 		// Do any additional setup after loading the view.
 		loadWebView()
+
+		objectiveHeader.preferredMaxLayoutWidth = 200
+
+		objectiveHeader.delegate = self
+		objectiveText.delegate = self
+		keyResultHeader.delegate = self
 	}
 
 	override var representedObject: Any? {
@@ -36,14 +47,6 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 
 	@IBAction func generatePNG(_ sender: Any) {
 
-        // update objective header
-        webView.evaluateJavaScript(
-            "var e = document.getElementById(\"obj-text\");" +
-            "e.innerHTML = \"\(objectiveHeader!.stringValue)\";"
-            , completionHandler: { (_, error) in
-                print(error)
-        })
-        
 		webView.takeSnapshot(with: nil, completionHandler: { (image, error) in
 			if let i = image {
 				let path = self.userDesktop() + "/image.png"
@@ -76,9 +79,17 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 		}
 	}
 
+
+	// delegate stuff
+
+	func controlTextDidChange(_ obj: Notification) {
+
+		updateWebView()
+	}
+
 	// WebKit Stuff
 
-	func loadWebView () {
+	func loadWebView() {
 
 		guard let fileURL = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "okr-generator") else {
 			print("failed to get url to index.html")
@@ -88,11 +99,51 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
 		// load file
 		webView.loadFileURL(fileURL, allowingReadAccessTo: fileURL)
 
-		// adjust height
-		webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-			self.webViewHeightConstraint.constant = height as! CGFloat + 20
-		})
+		// configure view
+		updateWebView()
+	}
+	func updateWebView() {
 
+		// update text fields
+		setHTML(text: getStringFromTextField(field: objectiveHeader), for: objectiveHeaderId)
+		setHTML(text: getStringFromTextField(field: objectiveText), for: objectiveTextId)
+		setHTML(text: getStringFromTextField(field: keyResultHeader), for: keyResultHeaderId)
+
+		// adjust height
+		getDocumentHeight { height in
+			self.webViewHeightConstraint.constant = height
+		}
+	}
+
+	// text field stuff
+
+	func getStringFromTextField(field: NSTextField) -> String {
+
+		if field.stringValue.isEmpty {
+			if let placeholder = field.placeholderString {
+				if !placeholder.isEmpty {
+					return placeholder
+				}
+			}
+		}
+		return field.stringValue
+	}
+
+	// HTML Stuff
+
+	func setHTML(text: String, for id: String) {
+
+		webView.evaluateJavaScript(
+			"var e = document.getElementById(\"\(id)\");" +
+			"e.innerHTML = \"\(text)\";"
+			, completionHandler: { (_, _) in })
+	}
+	func getDocumentHeight( onComplete: @escaping (CGFloat) -> Void ) {
+
+		webView.evaluateJavaScript("document.body.clientHeight;",
+			completionHandler: { (h: Any?, error: Error?) in
+				onComplete(h as! CGFloat)
+			})
 	}
 }
 
