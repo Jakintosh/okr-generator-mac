@@ -11,6 +11,12 @@ import WebKit
 
 class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTextFieldDelegate {
 
+	override var representedObject: Any? {
+		didSet {
+			// Update the view, if already loaded.
+		}
+	}
+
     // web view
 	@IBOutlet weak var webView: WKWebView!
 	@IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
@@ -21,10 +27,12 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 	@IBOutlet weak var objectiveText: NSTextField!
 	@IBOutlet weak var keyResultHeader: NSTextField!
 
+	// html ids
 	private let objectiveHeaderId = "obj-header"
 	private let objectiveTextId = "obj"
 	private let keyResultHeaderId = "kr-header"
 
+	// nsview stuff
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
@@ -39,12 +47,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 		keyResultHeader.delegate = self
 	}
 
-	override var representedObject: Any? {
-		didSet {
-		// Update the view, if already loaded.
-		}
-	}
-
+	// IBActions
 	@IBAction func generatePNG(_ sender: Any) {
 
 		webView.takeSnapshot(with: nil, completionHandler: { (image, error) in
@@ -57,8 +60,15 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 			}
 		})
 	}
-	public func getCardSize() -> CGSize {
+	@IBAction func addKeyResult(_ sender: Any) {
+		print("add key result")
 
+		let textField = NSTextField(string: "Key Result")
+		self.view.addSubview(textField)
+	}
+
+	// generation helpers
+	public func getCardSize() -> CGSize {
 		return CGSize(width: webViewWidthConstraint.constant, height: webViewHeightConstraint.constant)
 	}
 	public func userDesktop() -> String {
@@ -67,7 +77,6 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 		return userDesktopDirectory
 	}
 	func savePNG(image: NSImage, size: CGSize, path:String) {
-
 		let url = URL(fileURLWithPath: path)
 		print("saving to url: \(url) with size: \(size)")
 		let imageRep = NSBitmapImageRep(data: image.tiffRepresentation!)
@@ -79,16 +88,16 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 		}
 	}
 
+	// key result ui stuff
+	
 
 	// delegate stuff
-
 	func controlTextDidChange(_ obj: Notification) {
 
 		updateWebView()
 	}
 
-	// WebKit Stuff
-
+	// WebKit stuff
 	func loadWebView() {
 
 		guard let fileURL = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "okr-generator") else {
@@ -116,7 +125,6 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 	}
 
 	// text field stuff
-
 	func getStringFromTextField(field: NSTextField) -> String {
 
 		if field.stringValue.isEmpty {
@@ -129,8 +137,7 @@ class ViewController: NSViewController, WKUIDelegate, WKNavigationDelegate, NSTe
 		return field.stringValue
 	}
 
-	// HTML Stuff
-
+	// HTML stuff
 	func setHTML(text: String, for id: String) {
 
 		webView.evaluateJavaScript(
